@@ -85,6 +85,8 @@ angular.module('portainer.docker').controller('ServiceController', [
     NetworkService,
     endpoint
   ) {
+    $scope.endpoint = endpoint;
+
     $scope.state = {
       updateInProgress: false,
       deletionInProgress: false,
@@ -524,6 +526,11 @@ angular.module('portainer.docker').controller('ServiceController', [
         },
       });
     };
+
+    $scope.setPullImageValidity = setPullImageValidity;
+    function setPullImageValidity(validity) {
+      $scope.state.pullImageValidity = validity;
+    }
 
     $scope.updateService = function updateService(service) {
       let config = {};
