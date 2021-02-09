@@ -91,7 +91,14 @@
                   <por-access-control-form form-data="formValues.AccessControlData" hide-title="true"></por-access-control-form>
                   <div class="form-group">
                     <div class="col-sm-12">
-                      <button type="button" class="btn btn-primary btn-sm" ng-disabled="state.actionInProgress" ng-click="associateStack()" button-spinner="state.actionInProgress">
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-sm"
+                        ng-disabled="state.actionInProgress"
+                        ng-click="associateStack()"
+                        button-spinner="state.actionInProgress"
+                        style="margin-left: -5px;"
+                      >
                         <i class="fa fa-sync" aria-hidden="true" style="margin-right: 3px;"></i>
                         <span ng-hide="state.actionInProgress">Associate</span>
                         <span ng-show="state.actionInProgress">Association in progress...</span>
