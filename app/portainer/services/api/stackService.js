@@ -93,10 +93,10 @@ angular.module('portainer.app').factory('StackService', [
 
       var queries = [];
       if (compose) {
-        queries.push(service.composeStacks(true, { EndpointID: endpointId, IncludeOrphanedStacks: includeOrphanedStacks }));
+        queries.push(service.composeStacks(endpointId, true, { EndpointID: endpointId, IncludeOrphanedStacks: includeOrphanedStacks }));
       }
       if (swarm) {
-        queries.push(service.swarmStacks(true, { EndpointID: endpointId, IncludeOrphanedStacks: includeOrphanedStacks }));
+        queries.push(service.swarmStacks(endpointId, true, { IncludeOrphanedStacks: includeOrphanedStacks }));
       }
 
       $q.all(queries)
@@ -160,7 +160,7 @@ angular.module('portainer.app').factory('StackService', [
       return result;
     };
 
-    service.composeStacks = function (includeExternalStacks, filters) {
+    service.composeStacks = function (endpointId, includeExternalStacks, filters) {
       var deferred = $q.defer();
 
       $q.all({
@@ -169,7 +169,7 @@ angular.module('portainer.app').factory('StackService', [
       })
         .then(function success(data) {
           var stacks = data.stacks.map(function (item) {
-            if (item.EndpointId == filters.EndpointID) {
+            if (item.EndpointId == endpointId) {
               return new StackViewModel(item);
             } else {
               return new OrphanedStackViewModel(item);
@@ -187,7 +187,7 @@ angular.module('portainer.app').factory('StackService', [
       return deferred.promise;
     };
 
-    service.swarmStacks = function (includeExternalStacks, filters = {}) {
+    service.swarmStacks = function (endpointId, includeExternalStacks, filters = {}) {
       var deferred = $q.defer();
 
       SwarmService.swarm()
@@ -202,7 +202,7 @@ angular.module('portainer.app').factory('StackService', [
         })
         .then(function success(data) {
           var stacks = data.stacks.map(function (item) {
-            if (item.EndpointId == filters.EndpointID) {
+            if (item.EndpointId == endpointId) {
               return new StackViewModel(item);
             } else {
               return new OrphanedStackViewModel(item);
